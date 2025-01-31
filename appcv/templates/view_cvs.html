@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes CVs</title>
+    <style>
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .cvs-list {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .cvs-list li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cvs-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .no-cvs {
+            color: #ff6347;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Responsivité */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mes CVs</h1>
+
+        {% if cvs %}
+            <ul class="cvs-list">
+                {% for cv in cvs %}
+                    <li>
+                        <strong>Nom :</strong> {{ cv.personne.prenom }} {{ cv.personne.nom }}<br>
+                        <strong>Date de naissance :</strong> {{ cv.personne.date_naissance }}<br>
+                        <strong>Email :</strong> {{ cv.contact.email }}<br>
+                        <strong>Téléphone :</strong> {{ cv.contact.telephone }}<br>
+                        <strong>Adresse :</strong> {{ cv.contact.adresse }}<br>
+                        <strong>CV :</strong> <a href="{% url 'view_cv' cv.id %}">Voir le CV</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-cvs">Aucun CV disponible.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

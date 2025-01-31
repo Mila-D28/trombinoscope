@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trombinoscope</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            border-radius: 400px;
+            background-color:rgba(230, 233, 235, 0.98);
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #000000;
+        }
+        .boutons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .boutons a, .boutons button {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius:20px;
+            background-color:rgba(6, 190, 175, 0.64);
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .boutons a:hover, .boutons button:hover {
+            background-color:rgba(167, 223, 228, 0.92);
+        }
+        .trombinoscope-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 60px auto;
+            max-width: 100%;
+        }
+        .person-card {
+            text-align: columns;
+            background-color: rgba(130, 206, 160, 0.35);
+            padding: 20px;
+            margin: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(17, 81, 43, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .person-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(53, 198, 218, 0.35);
+        }
+        .person-card img {
+            
+            width: 160px;
+            height: 160px;
+            object-fit: 0 ;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solidrgba(137, 37, 98, 0.25);
+        }
+        .person-card p {
+            margin: 10px 0;
+        }
+        .person-card a {
+            text-decoration: none;
+            color:rgba(50, 33, 68, 0.63);
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .person-card a:hover {
+            color:rgba(75, 108, 143, 0.72);
+        }
+        @media (max-width: 600px) {
+            .boutons a, .boutons button {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+            .person-card img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Trombinoscope</h1>
+
+    <div class="boutons">
+        <a href="{% url 'formulaire' %}">Se connecter</a>
+        <button type="button" onclick="window.location.href='{% url 'formulaire' %}'">Créer ou modifier mon profil</button>
+        <a href="{% url 'register' %}">Créer un compte</a>
+    </div>
+
+    <div class="trombinoscope-container">
+        {% for item in data %}
+        <div class="person-card">
+            <!-- Photo de la personne -->
+            {% if item.personne.photo and item.personne.photo.url %}
+                <a href="{% if item.premier_cv %}{% url 'cv_detail' item.premier_cv.id %}{% else %}#{% endif %}">
+                    <img src="{{ item.personne.photo.url }}" alt="Photo de {{ item.personne.prenom }} {{ item.personne.nom }}">
+                </a>
+            {% else %}
+                <img src="https://via.placeholder.com/100" alt="Photo non disponible">
+                <p>Aucune photo</p>
+            {% endif %}
+
+            <!-- Nom de la personne -->
+            <p>{{ item.personne.prenom }} <br> {{ item.personne.nom }}</p>
+
+            <!-- Lien vers le CV -->
+            {% if item.premier_cv %}
+                <a href="{% url 'cv_detail' item.premier_cv.id %}">Voir le CV</a>
+            {% else %}
+                <p>Aucun CV disponible</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

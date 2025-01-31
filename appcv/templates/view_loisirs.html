@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Loisirs</title>
+    <style>
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .loisirs-list {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .loisirs-list li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .loisirs-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-loisirs {
+            color: #ff6347;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsivité */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mes Loisirs</h1>
+
+        {% if loisirs %}
+            <ul class="loisirs-list">
+                {% for loisir in loisirs %}
+                    <li>
+                        <p>{{ loisir.nom }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-loisirs">Vous n'avez pas encore ajouté de loisirs.</p>
+        {% endif %}
+
+        <a href="{% url 'create_or_edit_loisir' %}">
+            <button type="button">Ajouter un loisir</button>
+        </a>
+    </div>
+</body>
+</html>
